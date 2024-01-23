@@ -5,7 +5,7 @@ let songs
 
 async function getSong(folder) {
     currFolder = folder;
-    let a = await fetch(`http://localhost:3000/html/sigma%20webd/Spotify%20clone/assets/${folder}/`, { mode: 'cors' })
+    let a = await fetch(`assets/${folder}/`)
     let response = await a.text();
     let div = document.createElement('div')
     div.innerHTML = response;
@@ -60,7 +60,7 @@ function secondsToMinutesSeconds(seconds) {
 }
 
 const playMusic = (track, paused = false) => {
-    currentsong.src = `/html/sigma%20webd/Spotify%20clone/assets/${currFolder}/` + track
+    currentsong.src = `assets/${currFolder}/` + track
     if (!paused) {
         currentsong.play()
         play.src = "assets/pause.svg"
@@ -69,7 +69,7 @@ const playMusic = (track, paused = false) => {
     document.querySelector(".songinfo").innerHTML = track;
 }
 async function displayAlbums(){
-    let a = await fetch(`http://localhost:3000/html/sigma%20webd/Spotify%20clone/assets/songs/`, { mode: 'cors' })
+    let a = await fetch(`assets/songs/`)
     let response = await a.text();
     let div = document.createElement('div')
     div.innerHTML = response;
@@ -82,7 +82,7 @@ async function displayAlbums(){
         if(e.href.includes("assets/songs") && !e.href.includes(".htaccess")){
         //get the metadata of folder
         let folder = e.href.split("/").slice(-2)[0];
-        let a = await fetch(`http://localhost:3000/html/sigma%20webd/Spotify%20clone/assets/songs/${folder}/info.json`, { mode: 'cors' })
+        let a = await fetch(`assets/songs/${folder}/info.json`, { mode: 'cors' })
         let response = await a.json();
         cardContainer.innerHTML = cardContainer.innerHTML + `<div data-folder="${folder}" class="card rounded">
             <div class="play">
@@ -154,7 +154,6 @@ async function main() {
     })
     next.addEventListener("click", () => {
         let index = songs.indexOf(currentsong.src.split("/").slice(-1)[0])
-        console.log('length niche likhi h');
         console.log(songs.length);
         if ((index + 1) < songs.length) {
             playMusic(songs[index + 1])
